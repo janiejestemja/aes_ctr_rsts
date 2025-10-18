@@ -1,0 +1,44 @@
+name: Roll release
+
+on:
+  workflow_dispatch:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check Repo...
+      uses: actions/checkout@v5
+
+    - name: Set up Rust...
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        override: true
+
+    - name: Install wasm-pack...
+      run: cargo install wasm-pack
+
+    - name: Build wasm...
+      run: wasm-pack build --target web --release
+
+    - name: Package wasm...
+      run: tar -czf aes_ctr_rsts.tar.gz - C pkg .
+
+
+    - name: Release...
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: roll
+        body_path: README.md
+        files: aes_ctr_rsts.tar.gz
+        draft: true
+        prerelease: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

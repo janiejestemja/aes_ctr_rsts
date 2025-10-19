@@ -38,7 +38,7 @@ jobs:
         tag_name: roll
         body_path: README.md
         files: aes_ctr_rsts.tar.gz
-        draft: true
+        draft: false
         prerelease: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

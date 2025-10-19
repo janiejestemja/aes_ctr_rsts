@@ -83,7 +83,7 @@ Try it out like...
 python -m http.server -- 8000
 ```
 
-and visit `localhost:8000/js_src/index.html`.
+and visit `localhost:8000/index.html`.
 
 ## Developer notes...
 ---
